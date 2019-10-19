@@ -75,7 +75,8 @@ void action_command(struct BOOTINFO *binfo){
 			to_printf_dijkstra();
 		}else if(strcmp(command,"pdd")==0){
 			to_printf_pdd();
-		}else if(strcmp(command,"world.execute.me")==0){
+//		}else if(strcmp(command,"world.execute.me")==0){
+        }else if(strcmp(command,"gamestart"==0)){
 			timerctl.flag = 1 ;
 			init_data();
 		}else if(strcmp(command,"cls")==0){
@@ -126,9 +127,8 @@ void key(struct BOOTINFO *binfo,char s[40]){
 		}else if(strcmp(in,"d")==0){
 			pyx += 5 ;
 		}
-	}
-
-	if((strcmp(s,"1C")==0)){  // enter
+		print_area(binfo->vram, binfo->scrnx,COL8_C6C6C6,pyx,pyy,pyx+10,pyy+10);
+	}else if((strcmp(s,"1C")==0)){  // enter
 			if(x_move!=0){
 				// 右边
 				print_area(binfo->vram, binfo->scrnx ,COL8_000000,x_move + write_x,write_y,x_move+write_x+8, write_y+19);
