@@ -36,8 +36,8 @@ void inthandler20(int *esp)
 	if((timerctl.flag==1)){
         // img
         int fkx,fky;
-        print_string(binfo->vram, binfo->scrnx,  0,  0, 40, "LV.1 ***");
-		print_area(binfo->vram, binfo->scrnx,55, 0, 0, binfo->scrnx, binfo->scrny);
+        to_show();
+//		print_area(binfo->vram, binfo->scrnx,55, 0, 0, binfo->scrnx, binfo->scrny);
 
         header();
 	}
@@ -60,7 +60,7 @@ void header(){
     print_area(binfo->vram, binfo->scrnx,12, pyx-35, pyy+20, pyx-20, pyy+30);
 
     // 剑
-    print_area(binfo->vram, binfo->scrnx,15, pyx-30, pyy-25, pyx-25, pyy+40);
+    print_area(binfo->vram, binfo->scrnx,53, pyx-30, pyy-25, pyx-25, pyy+40);
 
     // body
     print_area(binfo->vram, binfo->scrnx,150, pyx-20, pyy+15, pyx+20, pyy+40);

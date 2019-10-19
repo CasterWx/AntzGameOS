@@ -274,9 +274,6 @@ void HariMain(void)
 
 	init_palette();
 	
-	while (timerctl.count/100<5)
-	 	to_show();
-
 
 	print_area(binfo->vram, binfo->scrnx , COL8_FFFFFF , 0 , 0 , binfo->scrnx, binfo->scrny);
 	init_screen8(binfo->vram, binfo->scrnx, binfo->scrny);
