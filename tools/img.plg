@@ -1,0 +1,35 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: img - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP1F1.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/img.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Users\Administrator\IdeaProjects\AntzGame\tools\img.cpp"
+]
+Creating command line "cl.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP1F1.tmp" 
+Creating temporary file "C:\Users\ADMINI~1\AppData\Local\Temp\RSP1F2.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/img.pdb" /debug /machine:I386 /out:"Debug/img.exe" /pdbtype:sept 
+.\Debug\img.obj
+]
+Creating command line "link.exe @C:\Users\ADMINI~1\AppData\Local\Temp\RSP1F2.tmp"
+<h3>Output Window</h3>
+Compiling...
+img.cpp
+C:\Users\Administrator\IdeaProjects\AntzGame\tools\img.cpp(34) : warning C4101: 'x' : unreferenced local variable
+C:\Users\Administrator\IdeaProjects\AntzGame\tools\img.cpp(34) : warning C4101: 'y' : unreferenced local variable
+C:\Users\Administrator\IdeaProjects\AntzGame\tools\img.cpp(36) : warning C4101: 'n' : unreferenced local variable
+Linking...
+
+
+
+<h3>Results</h3>
+img.exe - 0 error(s), 3 warning(s)
+</pre>
+</body>
+</html>
