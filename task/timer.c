@@ -8,6 +8,9 @@
 struct TIMERCTL timerctl;
 
 
+int local_pyx = 0;
+int local_pyy = 0;
+
 void init_pit(void)
 {
 	io_out8(PIT_CTRL, 0x34);
@@ -26,6 +29,7 @@ void init_data(void){
 	j= 0;
 }
 
+
 void inthandler20(int *esp)
 {
 	io_out8(PIC0_OCW2, 0x60); /* 把IRQ-00信号接收完了的信息通知给PIC */
@@ -34,12 +38,15 @@ void inthandler20(int *esp)
 
 	// 绘制
 	if((timerctl.flag==1)){
-        // img
-        int fkx,fky;
-        to_show();
+
+        if((local_pyx!=pyx) || (local_pyy!=pyy)){
+            local_pyx = pyx ;
+            local_pyy = pyy ;
+            to_show();
+            header();
+        }
 //		print_area(binfo->vram, binfo->scrnx,55, 0, 0, binfo->scrnx, binfo->scrny);
 
-        header();
 	}
 	return;
 }
