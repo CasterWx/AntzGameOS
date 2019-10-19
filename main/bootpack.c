@@ -4,10 +4,8 @@
 
 extern struct FIFO8 keyfifo, mousefifo;
 void init_keyboard(void);
-
+int pyx=200,pyy=200;
 void new_pe(struct BOOTINFO *binfo);
-
-int pyx=0 , pyy=0 ;
 
 int write_x = 60 ;
 int write_y = 57 ;
@@ -75,8 +73,7 @@ void action_command(struct BOOTINFO *binfo){
 			to_printf_dijkstra();
 		}else if(strcmp(command,"pdd")==0){
 			to_printf_pdd();
-//		}else if(strcmp(command,"world.execute.me")==0){
-        }else if(strcmp(command,"gamestart"==0)){
+		}else if(strcmp(command,"game")==0){
 			timerctl.flag = 1 ;
 			init_data();
 		}else if(strcmp(command,"cls")==0){
@@ -116,34 +113,38 @@ void action_command(struct BOOTINFO *binfo){
 }
 
 void key(struct BOOTINFO *binfo,char s[40]){
-	if(timerctl.flag == 1){
+
+    // todo gameMode
+    if (timerctl.flag==1){
 		char *in = replace_char(s) ;
-		if(strcmp(in,"w")==0){
-			pyy -= 5 ;
-		}else if(strcmp(in,"s")==0){
-			pyy += 5 ;
-		}else if(strcmp(in,"a")==0){
-			pyx -= 5 ;
-		}else if(strcmp(in,"d")==0){
-			pyx += 5 ;
+        if (strcmp(in,"w")==0){
+            pyy -= 10 ;
+        }else if(strcmp(in,"s")==0){
+            pyy += 10 ;
+        }else if(strcmp(in,"a")==0){
+            pyx -= 10 ;
+        }else if(strcmp(in,"d"==0)){
+            pyx += 10 ;
+        }
+        return ;
+    }
+
+	if((strcmp(s,"1C")==0)){  // enter
+		if(x_move!=0){
+			// 右边
+			print_area(binfo->vram, binfo->scrnx ,COL8_000000,x_move + write_x,write_y,x_move+write_x+8, write_y+19);
+			write_x = 60 ;
+			write_y += 19 ;
+		}else {
+			// 左边
+			print_area(binfo->vram, binfo->scrnx ,COL8_000000,x_move + write_x,write_y,x_move+write_x+8, write_y+19);
+			action_command(binfo);
+			write_x = 60 ;
+			write_y += 19 ;
+			if (x_move==0)
+				print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
 		}
-		print_area(binfo->vram, binfo->scrnx,COL8_C6C6C6,pyx,pyy,pyx+10,pyy+10);
-	}else if((strcmp(s,"1C")==0)){  // enter
-			if(x_move!=0){
-				// 右边
-				print_area(binfo->vram, binfo->scrnx ,COL8_000000,x_move + write_x,write_y,x_move+write_x+8, write_y+19);
-				write_x = 60 ;
-				write_y += 19 ;
-			}else {
-				// 左边
-				print_area(binfo->vram, binfo->scrnx ,COL8_000000,x_move + write_x,write_y,x_move+write_x+8, write_y+19);
-				action_command(binfo);
-				write_x = 60 ;
-				write_y += 19 ;
-				if (x_move==0)
-					print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
-			}
-			vim_index ++ ;
+		vim_index ++ ;
 	}else if((strcmp(s,"01")==0)){
 		if (x_move!=0){
 			print_area(binfo->vram, binfo->scrnx ,COL8_000000,x_move + write_x,write_y,x_move+write_x+8, write_y+19);
@@ -164,58 +165,61 @@ void key(struct BOOTINFO *binfo,char s[40]){
 		write_x += 8 ;
 		border(binfo);
 	}else if((strcmp(s,"3B")==0)){  //关于F1的响应中断
-			timerctl.flag = 0 ;
-			sprintf(command,"%s","");
-			// flag = 0
-			x_move = 0 ;
-			new_pe(binfo);
-			print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
-			sprintf(command,"%s","");
+		timerctl.flag = 0 ;
+		sprintf(command,"%s","");
+		// flag = 0
+		x_move = 0 ;
+		new_pe(binfo);
+		print_string(binfo->vram, binfo->scrnx, 4, write_y, COL8_FFFFFF, "AntzOS>");
+		sprintf(command,"%s","");
 	}else if(strcmp(s,"0E")==0){
-			// 回退
-			print_area(binfo->vram, binfo->scrnx ,COL8_000000,x_move + write_x,write_y,x_move+write_x+8, write_y+19);
-			int len = strlen(command);
-			command[len - 1] = '\0';
-			write_x -= 8 ;
-			print_area(binfo->vram, binfo->scrnx , COL8_000000,  x_move + write_x,     write_y,     x_move+write_x+8, write_y+19);
-			if(x_move!=0){
-   				// 正在右边界
-				if((x_move+write_x)<=binfo->scrnx/2) {
-					write_x = binfo->scrnx - 8;
-					write_y -= 19 ;
-				}
-				
-			}else if(x_move==0){
-				// 正在左边界
-				if(write_x<=9) {
-					write_x = binfo->scrnx/2-12 ;
-					write_y -= 19 ;
-				}
+		// 回退
+		print_area(binfo->vram, binfo->scrnx ,COL8_000000,x_move + write_x,write_y,x_move+write_x+8, write_y+19);
+		int len = strlen(command);
+		command[len - 1] = '\0';
+		write_x -= 8 ;
+		print_area(binfo->vram, binfo->scrnx , COL8_000000,  x_move + write_x,     write_y,     x_move+write_x+8, write_y+19);
+		if(x_move!=0){
+   			// 正在右边界
+			if((x_move+write_x)<=binfo->scrnx/2) {
+				write_x = binfo->scrnx - 8;
+				write_y -= 19 ;
 			}
 
+		}else if(x_move==0){
+			// 正在左边界
+			if(write_x<=9) {
+				write_x = binfo->scrnx/2-12 ;
+				write_y -= 19 ;
+			}
+		}
 	}else {
-			//putfonts8_asc(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, s);
-			// 非功能键则为输出键
-			char *in = replace_char(s) ;
-			if(strcmp(in,"")==0){
+		//putfonts8_asc(binfo->vram, binfo->scrnx,  write_x,  write_y, COL8_FFFFFF, s);
+		// 非功能键则为输出键
+		char *in = replace_char(s) ;
+		if(strcmp(in,"")==0){
+            // nothing todo
+		} else {
 
-			}else {
-				print_area(binfo->vram, binfo->scrnx, COL8_000000, x_move+write_x, write_y, x_move+write_x+8, write_y+19);
-				print_string(binfo->vram, binfo->scrnx,  x_move + write_x,  write_y, COL8_FFFFFF, in);
+			print_area(binfo->vram, binfo->scrnx, COL8_000000, x_move+write_x, write_y, x_move+write_x+8, write_y+19);
+			print_string(binfo->vram, binfo->scrnx,  x_move + write_x,  write_y, COL8_FFFFFF, in);
 
-				// vim内容记录
-				if(x_move!=0){ 	
-					sprintf(mlist[vim_index].vim_char,"%s%s",mlist[vim_index].vim_char,in) ; // 添加进去，但是为了在输出时不超过边界，选择
-				}
-
-				add_command(in);
-				write_x += 8 ;
+			// vim内容记录
+	    	if(x_move!=0){
+	    		sprintf(mlist[vim_index].vim_char,"%s%s",mlist[vim_index].vim_char,in) ; // 添加进去，但是为了在输出时不超过边界，选择
 			}
-			// 添加响应区
-			//清除
-			//boxfill8(binfo->vram, binfo->scrnx, COL8_008400 , 300	,240	,310	,250);
-			//打印字符 Only use debug
-			//putfonts8_asc(binfo->vram, binfo->scrnx,  300,  240 ,COL8_000000, s) ;
+
+			add_command(in);
+
+			if (timerctl.flag!=1){
+    			write_x += 8 ;
+			}
+		}
+		// 添加响应区
+		//清除
+		//boxfill8(binfo->vram, binfo->scrnx, COL8_008400 , 300	,240	,310	,250);
+		//打印字符 Only use debug
+		//putfonts8_asc(binfo->vram, binfo->scrnx,  300,  240 ,COL8_000000, s) ;
 	}
 	border(binfo);
 }
@@ -273,9 +277,6 @@ void HariMain(void)
 	while (timerctl.count/100<5)
 	 	to_show();
 
-	pyx = binfo->scrnx/2 ;
-
-	pyy = binfo->scrny - 30;
 
 	print_area(binfo->vram, binfo->scrnx , COL8_FFFFFF , 0 , 0 , binfo->scrnx, binfo->scrny);
 	init_screen8(binfo->vram, binfo->scrnx, binfo->scrny);
@@ -307,7 +308,7 @@ void HariMain(void)
 				i = fifo8_get(&keyfifo);
 				io_sti();
 				sprintf(s, "%02X", i);
-					key(binfo,s);
+				key(binfo,s);
 			} else if (fifo8_status(&mousefifo) != 0) {
 				i = fifo8_get(&mousefifo);
 				io_sti();
