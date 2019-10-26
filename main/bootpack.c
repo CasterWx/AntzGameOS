@@ -123,7 +123,7 @@ void key(struct BOOTINFO *binfo,char s[40]){
             pyy += 10 ;
         }else if(strcmp(in,"a")==0){
             pyx -= 10 ;
-        }else if(strcmp(in,"d"==0)){
+        }else if(strcmp(in,"d")==0){
             pyx += 10 ;
         }
         return ;

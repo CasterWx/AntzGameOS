@@ -15,7 +15,6 @@ mbr.bin : boot/mbr.asm Makefile
 asmhead.bin : boot/asmhead.asm Makefile
 	nask.exe boot/asmhead.asm asmhead.bin asmhead.lst
 
-# naskfunc.obj会放在asmfunc目录中，如果在bootpack.bim合成时候不到，not find naskfunc会报错一万次！！！2018年9月9日15:46:27
 naskfunc.obj : asmfunc/naskfunc.nas Makefile
 	nask.exe asmfunc/naskfunc.nas asmfunc/naskfunc.obj asmfunc/naskfunc.lst
 
@@ -29,7 +28,7 @@ naskfunc.obj : asmfunc/naskfunc.nas Makefile
 	nask.exe $*.nas $*.obj $*.lst
 
 bootpack.bim : $(Antz_kernel) Makefile
-	obj2bim.exe  @include/haribote.rul out:bootpack.bim stack:31360k map:bootpack.map $(Antz_kernel)
+	obj2bim.exe  @include/haribote.rul out:bootpack.bim stack:71360k map:bootpack.map $(Antz_kernel)
 
 bootpack.hrb : bootpack.bim Makefile
 	bim2hrb.exe bootpack.bim bootpack.hrb 0

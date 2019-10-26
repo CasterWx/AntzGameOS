@@ -7,7 +7,6 @@
 
 struct TIMERCTL timerctl;
 
-
 int local_pyx = 0;
 int local_pyy = 0;
 
@@ -44,12 +43,16 @@ void inthandler20(int *esp)
             local_pyy = pyy ;
             to_show();
             header();
+//            to_printf_self(pyx,pyy);
+//            to_printf_slm();
         }
+        show_linus(binfo->scrnx-100,binfo->scrny-200);
 //		print_area(binfo->vram, binfo->scrnx,55, 0, 0, binfo->scrnx, binfo->scrny);
 
 	}
 	return;
 }
+
 
 void header(){
 	struct BOOTINFO *binfo = (struct BOOTINFO *) ADR_BOOTINFO;
@@ -77,4 +80,16 @@ void header(){
     // stand 盾牌
     print_area(binfo->vram, binfo->scrnx,71, pyx+20, pyy-10, pyx+50, pyy+50);
     print_area(binfo->vram, binfo->scrnx,73, pyx+25, pyy-5, pyx+45, pyy+45);
+}
+
+void show_linus(int x, int y){
+	struct BOOTINFO *binfo = (struct BOOTINFO *) ADR_BOOTINFO;
+	print_area(binfo->vram, binfo->scrnx,150, x-20, y+15, x+20, y+40);
+
+    print_area(binfo->vram, binfo->scrnx,150, x-20, y+40, x-12, y+55);
+    print_area(binfo->vram, binfo->scrnx,150, x+12, y+40, x+20, y+55);
+    // hand
+    print_area(binfo->vram, binfo->scrnx,12, pyx-35, pyy+20, pyx-20, pyy+30);
+    to_printf_linus(x-25,y-45);
+
 }

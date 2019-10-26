@@ -1,10 +1,14 @@
+void show_linus(int x,int y);
 extern int pyx,pyy;
 /* keychar.c */
 char* replace_char(char s[40]);
 
 /* thun.c */
+void to_printf_linus();
 void to_printf_dijkstra();
 void to_printf_pdd();
+void to_printf_slm();
+void to_printf_self();
 void to_show();
 /* beaginShow.c */
 
