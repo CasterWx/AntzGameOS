@@ -1,6 +1,6 @@
 # AntzGameOS
 
-基于[AntzOS](https://github.com/CasterWx/AntzOS)的RPG冒险游戏。
+基于[AntzOS](https://github.com/CasterWx/AntzOS)的RPG冒险游戏。(吃饭的时候想到的坑，更新速度可能很慢)
 
 ![1](screen/VID_20191019_173937.gif)
 
